@@ -8,7 +8,9 @@ The all-photonic repeater graph state is described in *Azuma et al., Nature Comm
 Its deterministic generation is described in *Buterakos et al., Physical Review X (2017)*    (https://journals.aps.org/prx/abstract/10.1103/PhysRevX.7.041023)
 
 The model for performances of the repeater graph state protocol is described in:
-*Hilaire et al, ArXiv (2020): Resource-efficient quantum communications using all-photonic graph states generated from a few matter qubits*
+*Hilaire et al, ArXiv (2020): Resource-efficient quantum communications using all-photonic graph states generated from a few matter qubits*.
+
+
 Information about the derivation of the model are found in these three articles.
 
 ## Install
