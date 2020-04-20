@@ -11,6 +11,8 @@ The model for performances of the repeater graph state protocol is described in:
 *Hilaire et al, ArXiv (2020): Resource-efficient quantum communications using all-photonic graph states generated from a few matter qubits*
 Information about the derivation of the model are found in these three articles.
 
+## Install
+This model works on python 2.7 (or above) or 3.6 (or above) and only requires the numpy and scipy package.
 
 ## Model
 Here are the general details about the model, sorted from the most important to the least.
@@ -32,7 +34,7 @@ Describe a repeater graph state and the time required for its generation.
 It uses logical qubits encoded using tree graph states to mitigate loss and errors on single photon qubits.
 
 ### tree_cluster.py
-Structure of the tree graph state used for error correction. It also embeds information about its generation procedure. 
+Structure of the tree graph state used for error correction. It also embeds information about its generation procedure.
 
 ### fiber.py
 Fiber used for the RGS, it informs about the attenuation length of the fiber.
