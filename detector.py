@@ -22,10 +22,12 @@ class Detector(object):
 
     @property
     def det(self):
+        """Single photon detection efficiency."""
         return self._det
 
     @det.setter
     def det(self, value):
+        """Single photon detection efficiency."""
         if value < 0 or value > 1:
-            raise "Error Detector.det should be between 0 and 1"
+            raise "Detector.det should be between 0 and 1"
         self._det = value

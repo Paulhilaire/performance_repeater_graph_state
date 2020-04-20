@@ -49,14 +49,17 @@ class RGSNetwork(object):
 
     @property
     def distance(self):
+        """Total distance of the network."""
         return self._distance
 
     @property
     def L_0(self):
+        """Separation distance between two source nodes."""
         return self._L_0
 
     @property
     def N_RGS(self):
+        """Number of source nodes in the network."""
         return self._N_RGS
 
     @distance.setter
@@ -71,8 +74,12 @@ class RGSNetwork(object):
 
     @property
     def eta_detector(self):
+        """single photon detection efficiency of the detectors used in the network"""
         return self.detector.det
 
     @property
     def loss_ph(self):
+        """Single photon loss probability.
+
+        photon collection efficiency * detection efficiency * fiber transmission."""
         return 1 - self.eta_detector * self.source.proba * self.fiber.transmission(self.L_0 / 2) * self.RGS.p

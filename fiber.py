@@ -32,10 +32,12 @@ class Fiber(object):
 
     @property
     def attenuation_fiber_dB_km(self):
+        """Attenuation of the fiber in dB per km"""
         return self._attenuation_fiber_dB_km
 
     @property
     def attenuation_distance(self):
+        """Attenuation length of the fiber in km"""
         return self._attenuation_distance
 
     @attenuation_fiber_dB_km.setter
@@ -50,4 +52,7 @@ class Fiber(object):
 
     @property
     def t_att(self):
+        """Attenuation time in fiber.
+
+        (photon lifetime before being absorbed)"""
         return self.attenuation_distance / self.light_speed

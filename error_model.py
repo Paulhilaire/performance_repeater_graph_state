@@ -10,15 +10,18 @@ class ErrorModel(object):
         super(ErrorModel, self).__init__()
 
     @property
-    def QBER(self):
+    def qber(self):
         """Single qubit error rate."""
         return 1 - self.fidelity
 
     @property
     def binary_entropy(self):
-        return self.binary_entropy_func(self.QBER)
+        """"Binary entropy for a single qubit error rate self.qber"""
+        return self.binary_entropy_func(self.qber)
 
     def binary_entropy_func(self, Q):
+        """"Binary entropy for a single qubit error rate Q.
+        Used for the binary entropy definition of the protocol."""
         if Q < 0:
             print("Q is negative in binary entropy: Q = %s" % (Q))
             print("Check manually if the error is numerical (close to 0) or more serious")
@@ -58,7 +61,6 @@ class ErrorModel(object):
     def R_k(self):
         """Probability of successful indirect measurement of a photon at level k in the tree."""
         R = np.zeros((len(self.b),))
-
         for k in range(self.depth - 1, -1, -1):
             R[k] = 1 - (1 - (1 - self.loss_ph) * (1 - self.loss_ph +
                                                   self.loss_ph * R[k + 2]) ** self.b[k + 1]) ** self.b[k]
@@ -68,7 +70,6 @@ class ErrorModel(object):
         """Probability of individual successful indirect measurement of a photon at level k in the tree.
         (using only one "child qubit")"""
         S = np.zeros((len(self.b),))
-
         for k in range(self.depth - 1, -1, -1):
             S[k] = (1 - self.loss_ph) * (1 - self.loss_ph +
                                          self.loss_ph * self.R[k + 2]) ** self.b[k + 1]
@@ -96,24 +97,23 @@ class ErrorModel(object):
         # n_k: number of successful measurement made only directly (not indirectly)
         for n_k in range(self.b[k + 1] + 1):
             a = self.binom_proba(
-                error=self.R[k + 2] / (1 - self.loss_ph + self.loss_ph * self.R[k + 2]),
+                p=self.R[k + 2] / (1 - self.loss_ph + self.loss_ph * self.R[k + 2]),
                 n=self.b[k+1],
                 m=n_k)
 
             b = 0
             for i in range(n_k + 1 + 1):
                 c = self.binom_proba(
-                    error=self.epsilon,
+                    p=self.epsilon,
                     n=n_k + 1,
                     m=i,
                 )
                 for j in range(self.b[k+1] - n_k + 1):
-                    # two parity errors cancel each other
-                    if i + j % 2 == 0:
+                    if i + j % 2 == 0:  # two parity errors cancel each other
                         continue
                     else:
                         d = self.binom_proba(
-                            error=self.e_I[k+2],
+                            p=self.e_I[k+2],
                             n=self.b[k+1] - n_k,
                             m=j,
                         )
@@ -121,8 +121,11 @@ class ErrorModel(object):
             value += a * b
         return value
 
-    def binom_proba(self, error, n, m):
-        return binom(n, m) * error ** m * (1 - error) ** (n-m)
+    def binom_proba(self, p, n, m):
+        """Binomial probability.
+        n trials, m success with success probability p.
+        """
+        return binom(n, m) * p ** m * (1 - p) ** (n-m)
 
     def p_k(self, k, m_k):
         """probability that exactly m_k indirect measurement succeeds (perhaps with errors)."""
@@ -146,12 +149,12 @@ class ErrorModel(object):
         return value
 
     def error_X(self):
-        """Return the error_corrected residual error e_z.
+        """Return the error corrected residual error e_z.
         """
         return self.e_I[0]
 
     def error_Z(self):
-        """Return the error_corrected residual error e_z.
+        """Return the error corrected residual error e_z.
         """
         error_z = 0
         for n in range(self.b[0] + 1):
@@ -263,28 +266,3 @@ class SingleQubitError(ErrorModel):
         self.calculate_all()
         # print(self.network.RGS.tree.error_tree.X_error)
         return 1 - (2 * self.error_XZ + self.error_Y)
-
-#
-# class CoherenceTimeError(ErrorModel):
-#     """docstring for CoherenceTimeError."""
-#
-#     def __init__(self, network=RGSNetwork(), T_2=0):
-#         super(CoherenceTimeError, self).__init__()
-#         self.network = network
-#         self._T_2 = T_2
-#         self.network.RGS.T_2 = T_2
-#         self.epsilon = 0  # (remove later)
-#         self.also_error = False
-#
-#     @property
-#     def T_2(self):
-#         return self._T_2
-#
-#     @T_2.setter
-#     def T_2(self, value):
-#         self._T_2 = value
-#         self.network.RGS.T_2 = value
-#
-#     @property
-#     def fidelity(self):
-#         return self.network.RGS.F ** self.network.N_RGS
