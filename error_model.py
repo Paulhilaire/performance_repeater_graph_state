@@ -97,7 +97,7 @@ class ErrorModel(object):
         # n_k: number of successful measurement made only directly (not indirectly)
         for n_k in range(self.b[k + 1] + 1):
             a = self.binom_proba(
-                p=self.R[k + 2] / (1 - self.loss_ph + self.loss_ph * self.R[k + 2]),
+                p= 1 - self.R[k + 2] / (1 - self.loss_ph + self.loss_ph * self.R[k + 2]),
                 n=self.b[k+1],
                 m=n_k)
 
@@ -109,7 +109,7 @@ class ErrorModel(object):
                     m=i,
                 )
                 for j in range(self.b[k+1] - n_k + 1):
-                    if i + j % 2 == 0:  # two parity errors cancel each other
+                    if (i + j) % 2 == 0:  # two parity errors cancel each other
                         continue
                     else:
                         d = self.binom_proba(
@@ -143,7 +143,7 @@ class ErrorModel(object):
 
         else:
             # m_k is even
-            for j in range(m_k2 + 1, m_k):
+            for j in range(m_k2, m_k):
                 value += binom(m_k - 1, j) * self.e_Ik_B(k) ** j * \
                     (1 - self.e_Ik_B(k)) ** (m_k - j - 1)
         return value
