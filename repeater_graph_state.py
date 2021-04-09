@@ -1,5 +1,4 @@
 from scipy.interpolate import interp2d
-from utils import template_plot
 import os
 import sys
 import matplotlib.colors as colors
