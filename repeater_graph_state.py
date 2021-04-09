@@ -1,17 +1,7 @@
-from scipy.interpolate import interp2d
-import os
-import sys
-import matplotlib.colors as colors
-from matplotlib import cm
-from matplotlib import cycler
-import matplotlib.pyplot as plt
 import numpy as np
-from scipy.constants import physical_constants
-
 from fiber import Fiber
 from detector import Detector
 from tree_cluster import TreeCluster
-dir_path = os.path.dirname(os.path.realpath(__file__))
 
 
 class RepeaterGraphState(object):
