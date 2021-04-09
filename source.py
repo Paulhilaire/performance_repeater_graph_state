@@ -1,11 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib import cycler
-from matplotlib import cm
-import sys
-import os
-from scipy.constants import physical_constants
-
 
 class SinglePhotonSource(object):
     """Single photon source

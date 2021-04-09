@@ -1,6 +1,6 @@
 import numpy as np
 from rgs_network import RGSNetwork
-from scipy.special import factorial, binom
+from scipy.special import binom
 
 
 class ErrorModel(object):

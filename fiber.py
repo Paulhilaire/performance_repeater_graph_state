@@ -1,7 +1,6 @@
 import numpy as np
 from scipy.constants import physical_constants
 
-
 class Fiber(object):
 
     """

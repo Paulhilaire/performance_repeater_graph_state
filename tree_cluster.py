@@ -1,12 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.constants import physical_constants
-
 from fiber import Fiber
 from detector import Detector
-import math
-from scipy.special import factorial, binom
-
 
 class TreeCluster(object):
     """Tree cluster state.
